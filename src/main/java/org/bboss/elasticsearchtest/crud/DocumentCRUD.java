@@ -87,7 +87,7 @@ public class DocumentCRUD {
 		//根据文档id获取修改后的文档对象，返回json报文字符串
 		response = clientUtil.getDocument("demo",//索引表
 				"demo",//索引类型
-				"2");//w
+				"2");//文档id
 		System.out.println("打印修改后的结果：getDocument-------------------------");
 		System.out.println(response);
 
@@ -215,6 +215,12 @@ public class DocumentCRUD {
 				Demo.class);//返回的文档封装对象类型
 		//获取结果对象列表，最多返回1000条记录
 		List<Demo> demos = esDatas.getDatas();
+
+//		String json = clientUtil.executeRequest("demo/_search",//demo为索引表，_search为检索操作action
+//				"searchDatas",//esmapper/demo.xml中定义的dsl语句
+//				params);
+
+//		String json = com.frameworkset.util.SimpleStringUtil.object2json(demos);
 		//获取总记录数
 		long totalSize = esDatas.getTotalSize();
 		System.out.println(totalSize);
