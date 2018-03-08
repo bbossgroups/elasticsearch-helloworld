@@ -72,4 +72,46 @@
             "size":1000
         }]]>
     </property>
+
+    <!--
+        一个简单的检索dsl,中有四个变量
+        applicationName1
+        applicationName2
+        startTime
+        endTime
+        通过map传递变量参数值
+
+        变量语法参考文档：
+    -->
+    <property name="searchDatasArray">
+        <![CDATA[{
+            "query": {
+                "bool": {
+                    "filter": [
+                        {  ## 多值检索，查找多个应用名称对应的文档记录
+                            "terms": {
+                                "applicationName.keyword":[
+                                #if($applicationNames && $applicationNames.size() > 0)
+                                    #foreach($applicationName in $applicationNames)
+                                         #if($velocityCount > 0),#end "$applicationName"
+                                    #end
+                                #end
+                                ]
+                            }
+                        },
+                        {   ## 时间范围检索，返回对应时间范围内的记录，接受long型的值
+                            "range": {
+                                "agentStarttime": {
+                                    "gte": #[startTime],##统计开始时间
+                                    "lt": #[endTime]  ##统计截止时间
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            ## 最多返回1000条记录
+            "size":1000
+        }]]>
+    </property>
 </properties>

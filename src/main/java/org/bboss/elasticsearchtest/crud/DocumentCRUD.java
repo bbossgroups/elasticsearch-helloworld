@@ -225,4 +225,47 @@ public class DocumentCRUD {
 		long totalSize = esDatas.getTotalSize();
 		System.out.println(totalSize);
 	}
+
+	/**
+	 * 检索文档
+	 * @throws ParseException
+	 */
+	public void testSearchArray() throws ParseException {
+		//创建加载配置文件的客户端工具，用来检索文档，单实例多线程安全
+		ClientInterface clientUtil = ElasticSearchHelper.getConfigRestClientUtil("esmapper/demo.xml");
+		//设定查询条件,通过map传递变量参数值,key对于dsl中的变量名称
+		//dsl中有四个变量
+		//        applicationName1
+		//        applicationName2
+		//        startTime
+		//        endTime
+		Map<String,Object> params = new HashMap<String,Object>();
+		//设置applicationName1和applicationName2两个变量的值
+		List<String> datas = new ArrayList<String>();
+		datas.add("blackcatdemo2");
+		datas.add("blackcatdemo3");
+		params.put("applicationNames",datas);
+//		params.put("applicationName2","blackcatdemo3");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//设置时间范围,时间参数接受long值
+		params.put("startTime",dateFormat.parse("2017-09-02 00:00:00").getTime());
+		params.put("endTime",new Date().getTime());
+		//执行查询，demo为索引表，_search为检索操作action
+		ESDatas<Demo> esDatas =  //ESDatas包含当前检索的记录集合，最多1000条记录，由dsl中的size属性指定
+				clientUtil.searchList("demo/_search",//demo为索引表，_search为检索操作action
+						"searchDatasArray",//esmapper/demo.xml中定义的dsl语句
+						params,//变量参数
+						Demo.class);//返回的文档封装对象类型
+		//获取结果对象列表，最多返回1000条记录
+		List<Demo> demos = esDatas.getDatas();
+
+//		String json = clientUtil.executeRequest("demo/_search",//demo为索引表，_search为检索操作action
+//				"searchDatas",//esmapper/demo.xml中定义的dsl语句
+//				params);
+
+//		String json = com.frameworkset.util.SimpleStringUtil.object2json(demos);
+		//获取总记录数
+		long totalSize = esDatas.getTotalSize();
+		System.out.println(totalSize);
+	}
 }
