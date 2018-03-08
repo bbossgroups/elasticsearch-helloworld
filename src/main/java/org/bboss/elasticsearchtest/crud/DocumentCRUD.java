@@ -268,4 +268,18 @@ public class DocumentCRUD {
 		long totalSize = esDatas.getTotalSize();
 		System.out.println(totalSize);
 	}
+
+	public void testpons(){
+		ClientInterface clientUtil = ElasticSearchHelper.getConfigRestClientUtil("esmapper/demo.xml");
+		Demo demo = new Demo();
+		demo.setDemoId(2l);
+		demo.setAgentStarttime(new Date());
+		demo.setApplicationName("blackcatdemo2");
+		demo.setContentbody("bulk update content body2");
+		demo.setName("刘德华bulk update ");
+		clientUtil.addDocument("demo",//索引表
+				"demo",//索引类型
+				"updatePartDocument",
+				demo);
+	}
 }
