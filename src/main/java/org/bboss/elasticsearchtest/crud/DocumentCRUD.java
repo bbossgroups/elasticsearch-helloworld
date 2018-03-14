@@ -25,9 +25,10 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class DocumentCRUD {
+	private String mappath = "esmapper/demo233.xml";
 	public void testCreateIndice(){
 		//创建加载配置文件的客户端工具，单实例多线程安全，第一次运行要预加载，有点慢
-		ClientInterface clientUtil = ElasticSearchHelper.getConfigRestClientUtil("esmapper/demo.xml");
+		ClientInterface clientUtil = ElasticSearchHelper.getConfigRestClientUtil(mappath);
 		try {
 			//先删除mapping
 			clientUtil.dropIndice("demo");
@@ -52,10 +53,20 @@ public class DocumentCRUD {
 		demo.setName("刘德华");
 
 
-		//添加或者修改文档,如果demoId已经存在做修改操作，否则做添加文档操作，返回处理结果
+		//向固定index demo添加或者修改文档,如果demoId已经存在做修改操作，否则做添加文档操作，返回处理结果
 		String response = clientUtil.addDocument("demo",//索引表
 				"demo",//索引类型
 				demo);
+
+		//向动态index demo-yyyy.MM.dd这种添加或者修改文档,如果demoId已经存在做修改操作，否则做添加文档操作，返回处理结果
+		//elasticsearch.dateFormat=yyyy.MM.dd 按照日期生成动态index名称，例如：
+		// 到月 elasticsearch.dateFormat=yyyy.MM demo-2018.03
+		// 到天 elasticsearch.dateFormat=yyyy.MM.dd demo-2018.03.14
+		// 到小时 elasticsearch.dateFormat=yyyy.MM.dd.HH demo-2018.03.14.11
+		// 到分钟 elasticsearch.dateFormat=yyyy.MM.dd.HH.mm demo-2018.03.14.11.18
+//		String response = clientUtil.addDateDocument("demo",//索引表
+//				"demo",//索引类型
+//				demo);
 
 		System.out.println("打印结果：addDocument-------------------------");
 		System.out.println(response);
@@ -149,6 +160,8 @@ public class DocumentCRUD {
 	public void testBulkUpdateDocument() throws ParseException {
 		//创建批量修改文档的客户端对象，单实例多线程安全
 		ClientInterface clientUtil = ElasticSearchHelper.getRestClientUtil();
+//		List<ESIndice> indices = clientUtil.getIndexes();
+//		clientUtil.getIndexMappingFields(indice,type);
 		List<Demo> demos = new ArrayList<Demo>();
 		Demo demo = new Demo();
 		demo.setDemoId(2l);
@@ -192,7 +205,7 @@ public class DocumentCRUD {
 	 */
 	public void testSearch() throws ParseException {
 		//创建加载配置文件的客户端工具，用来检索文档，单实例多线程安全
-		ClientInterface clientUtil = ElasticSearchHelper.getConfigRestClientUtil("esmapper/demo.xml");
+		ClientInterface clientUtil = ElasticSearchHelper.getConfigRestClientUtil(mappath);
 		//设定查询条件,通过map传递变量参数值,key对于dsl中的变量名称
 		//dsl中有四个变量
 		//        applicationName1
@@ -232,7 +245,8 @@ public class DocumentCRUD {
 	 */
 	public void testSearchArray() throws ParseException {
 		//创建加载配置文件的客户端工具，用来检索文档，单实例多线程安全
-		ClientInterface clientUtil = ElasticSearchHelper.getConfigRestClientUtil("esmapper/demo.xml");
+		ClientInterface clientUtil = ElasticSearchHelper.getConfigRestClientUtil(mappath);
+
 		//设定查询条件,通过map传递变量参数值,key对于dsl中的变量名称
 		//dsl中有四个变量
 		//        applicationName1
@@ -270,7 +284,7 @@ public class DocumentCRUD {
 	}
 
 	public void testpons(){
-		ClientInterface clientUtil = ElasticSearchHelper.getConfigRestClientUtil("esmapper/demo.xml");
+		ClientInterface clientUtil = ElasticSearchHelper.getConfigRestClientUtil(mappath);
 		Demo demo = new Demo();
 		demo.setDemoId(2l);
 		demo.setAgentStarttime(new Date());
