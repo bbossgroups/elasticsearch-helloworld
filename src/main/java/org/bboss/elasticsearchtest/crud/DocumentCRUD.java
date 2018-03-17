@@ -57,6 +57,11 @@ public class DocumentCRUD {
 		String response = clientUtil.addDocument("demo",//索引表
 				"demo",//索引类型
 				demo);
+//		//强制刷新
+//		String response = clientUtil.addDocument("demo",//索引表
+//				"demo",//索引类型
+//				demo,"refresh=true");
+
 
 		//向动态index demo-yyyy.MM.dd这种添加或者修改文档,如果demoId已经存在做修改操作，否则做添加文档操作，返回处理结果
 		//elasticsearch.dateFormat=yyyy.MM.dd 按照日期生成动态index名称，例如：

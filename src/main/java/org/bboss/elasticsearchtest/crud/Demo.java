@@ -38,7 +38,8 @@ public class Demo extends ESBaseData {
 	 @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
 	 @Column(dataformat = "yyyy-MM-dd HH:mm:ss.SSS")
 	 */
-	private Date agentStarttime;
+
+	protected Date agentStarttime;
 	private String applicationName;
 
 	public String getName() {
