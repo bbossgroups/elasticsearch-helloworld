@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class DocumentCRUD {
-	private String mappath = "esmapper/demo233.xml";
+	private String mappath = "esmapper/demo.xml";
 	public void testCreateIndice(){
 		//创建加载配置文件的客户端工具，单实例多线程安全，第一次运行要预加载，有点慢
 		ClientInterface clientUtil = ElasticSearchHelper.getConfigRestClientUtil(mappath);
