@@ -107,10 +107,17 @@ public class DocumentCRUD {
 		System.out.println("打印修改后的结果：getDocument-------------------------");
 		System.out.println(response);
 
-		//删除文档
-		clientUtil.deleteDocument("demo",//索引表
+//		//删除文档
+//		clientUtil.deleteDocument("demo",//索引表
+//				"demo",//索引类型
+//				"2");//文档id
+
+		//根据文档id获取修改后的文档对象，返回json报文字符串
+		response = clientUtil.getDocument("demo",//索引表
 				"demo",//索引类型
 				"2");//文档id
+		System.out.println("打印修改后的结果：getDocument-------------------------");
+		System.out.println(response);
 		//批量删除文档
 		clientUtil.deleteDocuments("demo",//索引表
 				"demo",//索引类型
