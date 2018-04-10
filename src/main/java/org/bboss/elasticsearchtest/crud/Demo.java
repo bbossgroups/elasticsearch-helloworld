@@ -15,7 +15,7 @@ package org.bboss.elasticsearchtest.crud;/*
  */
 
 
-import com.frameworkset.orm.annotation.PrimaryKey;
+import com.frameworkset.orm.annotation.ESId;
 import org.frameworkset.elasticsearch.entity.ESBaseData;
 
 import java.util.Date;
@@ -26,7 +26,7 @@ import java.util.Date;
 public class Demo extends ESBaseData {
 
 	//设定文档标识字段
-	@PrimaryKey
+	@ESId
 	private long demoId;
 	private String contentbody;
 	/**  当在mapping定义中指定了日期格式时，则需要指定以下两个注解,例如

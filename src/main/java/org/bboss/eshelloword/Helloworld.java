@@ -21,7 +21,7 @@ import java.util.Date;
 
 public class Helloworld {
 	public static void main(String[] args){
-		Date date = new Date(1520930820000l);//1520584740000 1520845980000
+		Date date = new Date(1521788460387l);//1520584740000 1520845980000
 
 		date = new Date(1520930340000l);
 		//创建es客户端工具，验证环境
