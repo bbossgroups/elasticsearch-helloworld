@@ -125,7 +125,7 @@ public class DocumentCRUD {
 
 	}
 
-	public void testBulkAddDocument() throws ParseException {
+	public void testBulkAddDocument() {
 		//创建批量创建文档的客户端对象，单实例多线程安全
 		ClientInterface clientUtil = ElasticSearchHelper.getRestClientUtil();
 		List<Demo> demos = new ArrayList<Demo>();
@@ -148,9 +148,9 @@ public class DocumentCRUD {
 		//批量添加或者修改文档，将两个对象添加到索引表demo中
 		String response = clientUtil.addDocuments("demo",//索引表
 				"demo",//索引类型
-				demos);
+				demos,"refresh");//为了测试效果,启用强制刷新机制
 
-		System.out.println("addDateDocument-------------------------");
+		System.out.println("addDocument-------------------------");
 		System.out.println(response);
 		//获取第一个文档
 		response = clientUtil.getDocument("demo",//索引表
@@ -169,7 +169,7 @@ public class DocumentCRUD {
 	 * 批量修改文档，和批量添加文档操作一样，只是定义的文档对象标识都是刚才批量添加的文档
 	 * @throws ParseException
 	 */
-	public void testBulkUpdateDocument() throws ParseException {
+	public void testBulkUpdateDocument() {
 		//创建批量修改文档的客户端对象，单实例多线程安全
 		ClientInterface clientUtil = ElasticSearchHelper.getRestClientUtil();
 //		List<ESIndice> indices = clientUtil.getIndexes();
