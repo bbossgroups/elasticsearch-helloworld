@@ -125,6 +125,7 @@ public class DocumentCRUD {
 
 	}
 
+
 	public void testBulkAddDocument() {
 		//创建批量创建文档的客户端对象，单实例多线程安全
 		ClientInterface clientUtil = ElasticSearchHelper.getRestClientUtil();
@@ -144,6 +145,46 @@ public class DocumentCRUD {
 		demo.setContentbody("四大天王，这种文化很好，中华人民共和国");
 		demo.setName("张学友");
 		demos.add(demo);//添加第二个对象到list中
+
+		//批量添加或者修改文档，将两个对象添加到索引表demo中
+		String response = clientUtil.addDocuments("demo",//索引表
+				"demo",//索引类型
+				demos,"refresh");//为了测试效果,启用强制刷新机制
+
+		System.out.println("addDocument-------------------------");
+		System.out.println(response);
+		//获取第一个文档
+		response = clientUtil.getDocument("demo",//索引表
+				"demo",//索引类型
+				"2");//w
+		System.out.println("getDocument-------------------------");
+		System.out.println(response);
+		//获取第二个文档
+		demo = clientUtil.getDocument("demo",//索引表
+				"demo",//索引类型
+				"3",//文档id
+				Demo.class);
+	}
+
+	/**
+	 * 批量导入1000条数据
+	 */
+	public void testBulkAddDocuments() {
+		//创建批量创建文档的客户端对象，单实例多线程安全
+		ClientInterface clientUtil = ElasticSearchHelper.getRestClientUtil();
+		List<Demo> demos = new ArrayList<Demo>();
+		Demo demo = null;
+		for(int i = 2 ; i < 1002; i ++) {
+			demo = new Demo();//定义第一个对象
+			demo.setDemoId(i);
+			demo.setAgentStarttime(new Date());
+			demo.setApplicationName("blackcatdemo"+i);
+			demo.setContentbody("this is content body"+i);
+			demo.setName("刘德华"+i);
+			demos.add(demo);//添加第一个对象到list中
+		}
+
+
 
 		//批量添加或者修改文档，将两个对象添加到索引表demo中
 		String response = clientUtil.addDocuments("demo",//索引表

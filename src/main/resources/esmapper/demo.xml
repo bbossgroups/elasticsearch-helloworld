@@ -11,6 +11,9 @@
             "mappings": {
                 "demo": {
                     "properties": {
+                        "demoId":{
+                            "type":"long"
+                        },
                         "contentbody": {
                             "type": "text"
 
