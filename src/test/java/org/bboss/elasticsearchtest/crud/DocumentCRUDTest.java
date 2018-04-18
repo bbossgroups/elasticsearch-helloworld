@@ -37,5 +37,29 @@ public class DocumentCRUDTest {
 
 		//检索批量修改后的文档
 		documentCRUD.testSearch();
+		//带list复杂参数的文档检索操作
+		documentCRUD.testSearchArray();
+		//带from/size分页操作的文档检索操作
+		documentCRUD.testPagineSearch();
+		//带sourcefilter的文档检索操作
+		documentCRUD.testSearchSourceFilter();
+	}
+
+	@Test
+	public void testSearchSourceFilter() throws ParseException {
+		DocumentCRUD documentCRUD = new DocumentCRUD();
+		//删除/创建文档索引表
+		documentCRUD.testCreateIndice();
+		//添加/修改单个文档
+		documentCRUD.testAddAndUpdateDocument();
+		//批量添加文档
+		documentCRUD.testBulkAddDocument();
+		//不带sourceFilter检索文档
+		documentCRUD.testSearch();
+		//批量修改文档
+		documentCRUD.testBulkUpdateDocument();
+
+		//带sourcefilter的文档检索操作
+		documentCRUD.testSearchSourceFilter();
 	}
 }

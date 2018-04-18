@@ -108,7 +108,7 @@
                 }
             },
             ## 分页起点
-            "from":#[from]
+            "from":#[from],
             ## 最多返回size条记录
             "size":#[size]
         }]]>
@@ -155,6 +155,78 @@
             "size":1000
         }]]>
     </property>
+
+    <!--
+        一个SourceFilter的检索dsl,中有四个参数变量
+        applicationName1
+        applicationName2
+        startTime
+        endTime
+        通过map传递变量参数值
+
+        {
+            "_source": {
+                "includes": [ "agentStarttime", "applicationName" ],
+                "excludes": [ "contentbody" ]
+            },
+            "query" : {
+                "term" : { "user" : "kimchy" }
+            }
+        }
+
+    -->
+    <property name="searchSourceFilter">
+        <![CDATA[{
+        #if($includes || $excludes) ## 只有指定了includes或者excludes才需要添加source filter
+            "_source": {
+                #if($includes && $includes.size() > 0) ##设置includes filter
+                    "includes": [
+                        #foreach($include in $includes)
+                             #if($velocityCount > 0),#end "$include"
+                        #end
+                    ]
+                    #if($excludes && $excludes.size() > 0),#end ##如果还存在排斥字段，则需要加一个逗号
+                #end
+                #if($excludes && $excludes.size() > 0)  ##设置excludes filter
+                    "excludes": [
+                        #foreach($exclude in $excludes)
+                             #if($velocityCount > 0),#end "$exclude"
+                        #end
+                    ]
+                #end
+            },
+        #end
+            "query": {
+                "bool": {
+                    "filter": [
+                    #if($applicationNames && $applicationNames.size() > 0) ##只有传递了需要检索的应用名称集合，才需要添加下面的条件
+                        {  ## 多值检索，查找多个应用名称对应的文档记录
+                            "terms": {
+                                "applicationName.keyword":[
+                                    #foreach($applicationName in $applicationNames)
+                                         #if($velocityCount > 0),#end "$applicationName"
+                                    #end
+                                ]
+                            }
+                        },
+                    #end
+                        {   ## 时间范围检索，返回对应时间范围内的记录，接受long型的值
+                            "range": {
+                                "agentStarttime": {
+                                    "gte": #[startTime],##统计开始时间
+                                    "lt": #[endTime]  ##统计截止时间
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            ## 最多返回1000条记录
+            "size":1000
+        }]]>
+    </property>
+
+
     <!--部分更新,注意：dsl不能换行-->
     <property name="updatePartDocument">
         <![CDATA[{"applicationName" : #[applicationName],"agentStarttime" : #[agentStarttime],"contentbody" : #[contentbody]}]]>

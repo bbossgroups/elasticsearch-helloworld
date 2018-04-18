@@ -27,7 +27,7 @@ public class Demo extends ESBaseData {
 
 	//设定文档标识字段
 	@ESId
-	private long demoId;
+	private Long demoId;
 	private String contentbody;
 	/**  当在mapping定义中指定了日期格式时，则需要指定以下两个注解,例如
 	 *
@@ -76,11 +76,11 @@ public class Demo extends ESBaseData {
 		this.applicationName = applicationName;
 	}
 
-	public long getDemoId() {
+	public Long getDemoId() {
 		return demoId;
 	}
 
-	public void setDemoId(long demoId) {
+	public void setDemoId(Long demoId) {
 		this.demoId = demoId;
 	}
 }

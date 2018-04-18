@@ -176,7 +176,7 @@ public class DocumentCRUD {
 		Demo demo = null;
 		for(int i = 2 ; i < 1002; i ++) {
 			demo = new Demo();//定义第一个对象
-			demo.setDemoId(i);
+			demo.setDemoId((long)i);
 			demo.setAgentStarttime(new Date());
 			demo.setApplicationName("blackcatdemo"+i);
 			demo.setContentbody("this is content body"+i);
@@ -290,6 +290,67 @@ public class DocumentCRUD {
 		//获取总记录数
 		long totalSize = esDatas.getTotalSize();
 		System.out.println(totalSize);
+	}
+
+
+	/**
+	 * SourceFilter检索文档
+	 * @throws ParseException
+	 */
+	public void testSearchSourceFilter() throws ParseException {
+		//创建加载配置文件的客户端工具，用来检索文档，单实例多线程安全
+		ClientInterface clientUtil = ElasticSearchHelper.getConfigRestClientUtil(mappath);
+		//设定查询条件,通过map传递变量参数值,key对于dsl中的变量名称
+		//dsl中有四个变量
+		//        applicationName1
+		//        applicationName2
+		//        startTime
+		//        endTime
+		Map<String,Object> params = new HashMap<String,Object>();
+		//设置applicationName1和applicationName2两个变量的值，将多个应用名称放到list中，通过list动态传递参数
+		List<String> datas = new ArrayList<String>();
+		datas.add("blackcatdemo2");
+		datas.add("blackcatdemo3");
+		params.put("applicationNames",datas);
+
+		List<String> includes = new ArrayList<String>(); //定义要返回的source字段
+		includes.add("agentStarttime");
+		includes.add("applicationName");
+		params.put("includes",includes);
+
+		List<String> excludes = new ArrayList<String>(); //定义不需要返回的source字段
+		excludes.add("contentbody");
+		excludes.add("demoId");
+		params.put("excludes",excludes);
+
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//设置时间范围,时间参数接受long值
+		//说明： 也可以接受日期类型，如果传入Date类型的时间并且通过map传参，则需要手动进行日期格式转换成字符串格式的日期串，通过entity传参则不需要
+		params.put("startTime",dateFormat.parse("2017-09-02 00:00:00").getTime());
+		params.put("endTime",new Date().getTime());
+
+		//执行查询，demo为索引表，_search为检索操作action
+		ESDatas<Demo> esDatas =  //ESDatas包含当前检索的记录集合，最多1000条记录，由dsl中的size属性指定
+				clientUtil.searchList("demo/_search",//demo为索引表，_search为检索操作action
+						"searchSourceFilter",//esmapper/demo.xml中定义的dsl语句
+						params,//变量参数
+						Demo.class);//返回的文档封装对象类型
+		//获取总记录数
+		long totalSize = esDatas.getTotalSize();
+
+		//获取结果对象列表，最多返回1000条记录
+		List<Demo> demos = esDatas.getDatas();
+
+		System.out.println(totalSize);
+
+		//以下是返回原始检索json报文检索代码
+//		String json = clientUtil.executeRequest("demo/_search",//demo为索引表，_search为检索操作action
+//				"searchSourceFilter",//esmapper/demo.xml中定义的dsl语句
+//				params);
+
+//		String json = com.frameworkset.util.SimpleStringUtil.object2json(demos);
+
 	}
 
 
