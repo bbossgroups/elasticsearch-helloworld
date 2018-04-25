@@ -18,19 +18,19 @@
                 <description> <![CDATA[ 指定序列化处理类，默认为kafka.serializer.DefaultEncoder,即byte[] ]]></description>
             </property>-->
 
-            <property name="elasticsearch.rest.hostNames" value="${elasticsearch.rest.hostNames}">
+            <property name="elasticsearch.rest.hostNames" value="${elasticsearch.rest.hostNames:127.0.0.1:9200}">
                 <description> <![CDATA[ rest协议地址 ]]></description>
             </property>
 
 
-            <property name="elasticsearch.dateFormat" value="${elasticsearch.dateFormat}">
+            <property name="elasticsearch.dateFormat" value="${elasticsearch.dateFormat:yyyy.MM.dd}">
                 <description> <![CDATA[ 索引日期格式]]></description>
             </property>
-            <property name="elasticsearch.timeZone" value="${elasticsearch.timeZone}">
+            <property name="elasticsearch.timeZone" value="${elasticsearch.timeZone:Asia/Shanghai}">
                 <description> <![CDATA[ 时区信息]]></description>
             </property>
 
-            <property name="elasticsearch.ttl" value="${elasticsearch.ttl}">
+            <property name="elasticsearch.ttl" value="${elasticsearch.ttl:2d}">
                 <description> <![CDATA[ ms(毫秒) s(秒) m(分钟) h(小时) d(天) w(星期)]]></description>
             </property>
 
