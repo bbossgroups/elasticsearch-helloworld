@@ -46,7 +46,7 @@ public class DocumentCRUD {
 		ClientInterface clientUtil = ElasticSearchHelper.getRestClientUtil();
 		//构建一个对象，日期类型，字符串类型属性演示
 		Demo demo = new Demo();
-		demo.setDemoId(2l);//文档id，唯一标识，@PrimaryKey注解标示,如果demoId已经存在做修改操作，否则做添加文档操作
+		demo.setDemoId(2l);//文档id，唯一标识，@ESId注解标示,如果demoId已经存在做修改操作，否则做添加文档操作
 		demo.setAgentStarttime(new Date());
 		demo.setApplicationName("blackcatdemo2");
 		demo.setContentbody("this is content body2");
@@ -90,7 +90,7 @@ public class DocumentCRUD {
 
 		//update文档
 		demo = new Demo();
-		demo.setDemoId(2l);//文档id，唯一标识，@PrimaryKey注解标示,如果demoId已经存在做修改操作，否则做添加文档操作
+		demo.setDemoId(2l);//文档id，唯一标识，@ESId注解标示,如果demoId已经存在做修改操作，否则做添加文档操作
 		demo.setAgentStarttime(new Date());
 		demo.setApplicationName("blackcatdemo2");
 		demo.setContentbody("this is modify content body2");
