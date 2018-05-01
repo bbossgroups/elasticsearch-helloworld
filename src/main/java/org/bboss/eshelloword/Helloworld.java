@@ -24,19 +24,17 @@ public class Helloworld {
 		Date date = new Date(1521788460387l);//1520584740000 1520845980000
 
 		date = new Date(1520930340000l);
-		//创建es客户端工具，验证环境
+		//创建es客户端工具
 		ClientInterface clientUtil = ElasticSearchHelper.getRestClientUtil();
+
+		//判读索引是否存在，存在返回true，不存在返回false
+		boolean exist = clientUtil.existIndice("twitter");
+		//判断索引类型是否存在，存在返回true，不存在返回false
+		exist = clientUtil.existIndiceType("twitter",//indice
+											"tweet");//type
+		exist = clientUtil.existIndice("agentinfo");
 		//验证环境,获取es状态
 		String response = clientUtil.executeHttp("_cluster/state?pretty",ClientInterface.HTTP_GET);
-
-		//判断索引类型是否存在，抛出异常表示不存在，正常返回表示存在
-		boolean exist = clientUtil.existIndiceType("twitter","tweet");
-
-		//判读索引是否存在，抛出异常表示不存在，正常返回表示存在
-		exist = clientUtil.existIndice("twitter");
-
-		exist = clientUtil.existIndice("agentinfo");
-
 		System.out.println(response);
 //		Map<String,Object> state = clientUtil.executeHttp("_cluster/state",ClientInterface.HTTP_GET,
 //				new MapResponseHandler());//返回map结构
