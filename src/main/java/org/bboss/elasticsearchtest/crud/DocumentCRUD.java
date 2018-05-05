@@ -17,6 +17,7 @@ package org.bboss.elasticsearchtest.crud;/*
 import org.frameworkset.elasticsearch.ElasticSearchException;
 import org.frameworkset.elasticsearch.ElasticSearchHelper;
 import org.frameworkset.elasticsearch.client.ClientInterface;
+import org.frameworkset.elasticsearch.client.ClientUtil;
 import org.frameworkset.elasticsearch.entity.ESDatas;
 
 import java.text.DateFormat;
@@ -39,6 +40,27 @@ public class DocumentCRUD {
 		//再创建mapping
 		clientUtil.createIndiceMapping("demo",//索引表名称
 				"createDemoIndice");//索引表mapping dsl脚本名称，在esmapper/demo.xml中定义createDemoIndice
+	}
+	public void testCreateTempate() throws ParseException{
+
+		ClientInterface clientUtil = ElasticSearchHelper.getConfigRestClientUtil(mappath);
+		//创建模板
+		String response = clientUtil.createTempate("demotemplate_1",//模板名称
+				"demoTemplate");//模板对应的脚本名称，在esmapper/demo.xml中配置
+		System.out.println("createTempate-------------------------");
+		System.out.println(response);
+		//获取模板
+		/**
+		 * 指定模板
+		 * /_template/demoTemplate_1
+		 * /_template/demoTemplate*
+		 * 所有模板 /_template
+		 *
+		 */
+		String template = clientUtil.executeHttp("/_template/demotemplate_1",ClientUtil.HTTP_GET);
+		System.out.println("HTTP_GET-------------------------");
+		System.out.println(template);
+
 	}
 
 	public void testAddAndUpdateDocument() throws ParseException {
