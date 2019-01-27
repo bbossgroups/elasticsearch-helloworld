@@ -1,3 +1,12 @@
+Bboss is a good elasticsearch Java rest client. It operates and accesses elasticsearch in a way similar to mybatis.
+
+# BBoss Environmental requirements
+
+JDK requirement: JDK 1.7+
+
+Elasticsearch version requirements: 2. X,5. X,6. X,+
+
+Spring booter 1.x,2.x,+
 # 开发入门教程-一个增删改查的例子
 ## 快速集成和应用 
 非spring boot项目：
