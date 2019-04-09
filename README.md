@@ -9,14 +9,18 @@ Elasticsearch version requirements: 1.X,2.X,5.X,6.X,+
 Spring booter 1.x,2.x,+
 # 开发入门教程-一个增删改查的例子
 ## 快速集成和应用 
+
 非spring boot项目：
-https://my.oschina.net/bboss/blog/1801273 
+
+https://esdoc.bbossgroups.com/#/common-project-with-bboss
 
 spring boot项目：
-https://my.oschina.net/bboss/blog/1835601
+
+https://esdoc.bbossgroups.com/#/spring-booter-with-bboss
 
 详细配置说明参考文档：
-https://my.oschina.net/bboss/blog/1556866
+
+https://esdoc.bbossgroups.com/#/development
 
 bboss elasticsearch开发视频教程 ,百度网盘免密下载： 
 
