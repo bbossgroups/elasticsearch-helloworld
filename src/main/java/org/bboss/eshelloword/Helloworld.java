@@ -35,7 +35,7 @@ public class Helloworld {
 		exist = clientUtil.existIndice("agentinfo");
 		//验证环境,获取es状态
 		String response = clientUtil.executeHttp("_cluster/state?pretty",ClientInterface.HTTP_GET);
-		System.out.println(response);
+//		System.out.println(response);
 //		Map<String,Object> state = clientUtil.executeHttp("_cluster/state",ClientInterface.HTTP_GET,
 //				new MapResponseHandler());//返回map结构
 	}
